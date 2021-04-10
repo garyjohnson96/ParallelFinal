@@ -9,8 +9,7 @@ using namespace std;
 
 //Tags
 #define WORK 1
-#define NEW_DATA 2
-#define TERMINATE 3
+#define TERMINATE 2
 
 // globals for different size meshes
 const int TINY = 10;
