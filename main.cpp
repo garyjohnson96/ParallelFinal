@@ -13,6 +13,22 @@ using namespace std;
 #define WORK 1
 #define TERMINATE 2
 
+<<<<<<< HEAD
+const char * getColor(float temp){
+    if (temp < 25) { return "\033[1;34m"; }
+    if (temp >= 25 && temp <= 60) { return "\033[1;33m"; }
+    if (temp > 60) { return "\033[1;31m"; }
+    return "\033[0m";
+}
+=======
+// globals for different size meshes
+const int TINY = 6;
+const int SMALL = 100;
+const int MEDIUM = 1000;
+const int LARGE = 10000;
+const int VERY_LARGE = 100000;
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
+
 const char * getColor(float temp){
     if (temp < 25) { return "\033[1;34m"; }
     if (temp >= 25 && temp <= 60) { return "\033[1;33m"; }
@@ -21,9 +37,15 @@ const char * getColor(float temp){
 }
 
 // DEBUG helper function to check the values in the mesh
+<<<<<<< HEAD
 void printMesh(vector<vector<float>> mesh, int rank, float timestep) {
     cout << string(2,'\n');
     cout << "Rank: " << rank << " Time: "<<timestep<<endl;
+=======
+void printMesh(vector<vector<float>> mesh, int rank) {
+    cout << string(2,'\n');
+    cout << "Rank: " << rank << endl;
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
     for (size_t row = 0; row < mesh.size(); row++) {
         for (size_t col = 0; col < mesh[row].size(); col++) {
             const char* color = getColor(mesh[row][col]);
@@ -55,6 +77,7 @@ int main(int argc, char** argv) {
     int rank, size;
     MPI_Comm_rank(MCW, &rank);
     MPI_Comm_size(MCW, &size);
+<<<<<<< HEAD
     // take in the command line variables
     int mesh_size, iterations;
     sscanf(argv[1], "%d", &mesh_size);
@@ -70,25 +93,45 @@ int main(int argc, char** argv) {
         MPI_Finalize();
         return 0;
     }
+=======
+    float dt = 1.5, dx = 0.038, therm_diff = 0.000111; // dt-time step, dx-node separation, thermal diffusivity is for copper
+    float fourier = (dt * therm_diff) / (dx * dx); // FOURIER MUST BE < 0.5 FOR STABILITY
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
     float hot = 75, cold = 20;
 
     srand(chrono::system_clock::now().time_since_epoch().count());  // seed rand() by current time
 
+<<<<<<< HEAD
     vector<vector<float>> mesh(mesh_size, vector<float>(mesh_size, 25));  // initialize the mesh with the base temperature
+=======
+    vector<vector<float>> mesh(TINY, vector<float>(TINY, 25));  // initialize the mesh with the base temperature
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
 
     vector<vector<int>> hotCells{ {3, 0} , {4, 2} };  // mesh coordinates of the hot and cool cells
     vector<vector<int>> coolCells{ {1, 3} , {4, 4} };
 
+<<<<<<< HEAD
     setTemps(mesh, hotCells, coolCells, rank, hot, cold);
     MPI_Barrier(MCW);
 
     start = MPI_Wtime();
 
+=======
+
+    setTemps(mesh, hotCells, coolCells, rank, hot, cold);
+    MPI_Barrier(MCW);
+
+    int iterations = 200;  // change maybe?
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
     int timeStep = 0;
     while (timeStep < iterations) {
 
         if (rank == MASTER) {
+<<<<<<< HEAD
             printMesh(mesh, rank, timeStep*dt);
+=======
+            printMesh(mesh, rank);
+>>>>>>> 5d4436b3cfad400c1b4d1f1537e6cb3a4abf7adb
             int currentRow = 0;
             int workingProcesses = 0;
 
