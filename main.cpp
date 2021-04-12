@@ -56,6 +56,11 @@ int main(int argc, char** argv) {
     MPI_Comm_rank(MCW, &rank);
     MPI_Comm_size(MCW, &size);
     // take in the command line variables
+    // argv[1] = mesh_size
+    // argv[2] = time step
+    // argv[3] = distance between nodes
+    // argv[4] = thermal diffusivity of the material
+    // argv[5] = number of iterations
     int mesh_size, iterations;
     sscanf(argv[1], "%d", &mesh_size);
     sscanf(argv[5], "%d", &iterations);
